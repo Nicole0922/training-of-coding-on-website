@@ -5,4 +5,4 @@ maimai -- this game is existed and famous in Amusement Arcade. I try to create a
 
 
 Finished website
-clock website -- my very first website, just for training my programming skills, yet this website is not that useful.
+clock website -- my very first website, just for training my programming skills, and this website is not that useful.
