@@ -1,7 +1,7 @@
 # training-of-coding-on-website
 
 On-progress website
-maimai -- this game has been popular in Amusement Arcade among Japan and also Hong Kong. I try to create a web version one but it hasn't finished yet.
+maimai -- this game, which has been popular in Japan and Hong Kong, can be found in Amusement Arcade. I try to create a web version one but it hasn't finished yet.
 
 
 Finished website
