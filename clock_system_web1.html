@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    button {
+      display: inline-block;
+      background-color: #fa9daa;
+      border-radius: 10px;
+      border: 4px double #facaca;
+      color: #facaca;
+      text-align: center;
+      font-size: 18px;
+      padding: 8px;
+      width: 120px;
+      transition: all 0.3s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    button:hover {
+      background-color: #a4fcf6;
+    }
+  </style>
+
+<h1 id=head>~Welcome to Clock System~</h1>
+<h2 id=subhead1>❤ Today's Time</h2>
+<script type="text/javascript"> 
+  function display_c(){
+    var refresh=1000; // Refresh rate in milli seconds
+    mytime=setTimeout('display_ct()',refresh)
+  }
+
+  function display_ct() {
+    var x = new Date()
+    document.getElementById('ct').innerHTML = x;
+    display_c();
+  }
+</script>
+
+<body onload=display_ct();>
+<p id='ct'></p>
+
+
+<script>
+  document.body.style.backgroundImage = "url('https://images2.alphacoders.com/101/1011396.jpg')";
+  document.body.style.backgroundSize = "1100px 841px";
+  document.body.style.backgroundRepeat = "no-repeat";
+  document.body.style.backgroundPosition = "right top";
+  document.body.style.color = 'DarkTurquoise';
+</script>
+
+<h2 id=subhead2>❤ Alarm Setting</h2>
+<p>Please enter the time that you want me to remind you of.
+<br>The hour should be between 0 to 23, and the minute should be between 0 to 59.</p>
+<p id="showalarm">No alarm is set.</p>
+<button id=seta type="button" onclick="setalarm()">Set alarm</button>
+<button id="reset2" type="button" style="display:none;" onclick="cancel2 = true">Reset</button>
+
+<script>
+	var cancel2 = false;
+	function setalarm(){
+        var hour = prompt("Please enter the hours.");
+        if (hour==null)return 0;
+        if (hour<0 || hour>23 || hour==''){
+        	alert("Invalid input, please try again.");
+            return 0;
+        }
+        var min = prompt("Please enter the minutes.");
+        if (min==null)return 0;
+        if (min<0 || min>59 || min==''){
+        	alert("Invalid input, please try again.");
+            return 0;
+        }
+        var ok = confirm("Are you sure this is the right time?");
+        if (ok==true){
+          var h = hour;
+          var m = min;
+          if (hour<10)hour='0'+ hour;
+          if (min<10)min='0'+ min;
+          document.getElementById("seta").style.display = 'none';
+          document.getElementById("reset2").style.display = 'block';
+          document.getElementById("showalarm").innerHTML = ["The alarm will ring at ",[hour,min].join(':'),"."].join('');
+          ringing(h,m);
+        }
+    }
+    function ringing(hrs,mins){
+  		var now = new Date();  
+        var hourr = now.getHours();
+        var minn = now.getMinutes();
+        if (hourr==hrs && minn==mins){
+        	alert("RINGING!!! IT IS TIME!");
+          	document.getElementById("seta").style.display = 'block';
+            document.getElementById("reset2").style.display = 'none';
+            document.getElementById("showalarm").innerHTML = 'No alarm is set.';
+            return 0;
+        }
+        if(cancel2==true){
+          cancel2 = false;
+          document.getElementById("reset2").style.display = 'none';
+          document.getElementById("seta").style.display = 'block';
+          document.getElementById("showalarm").innerHTML = 'No alarm is set.';
+          return 0;
+        }
+        else setTimeout(ringing,1000,hrs,mins);
+    }
+</script>
+<p></p>
+
+
+<h2 id=subhead3>❤ Timer</h2>
+<p>Please enter the time that you want to count down.</p>
+<p id="showtimer">No timer is set.</p>
+<button id="sett" type="button" onclick="timer()">Set timer</button>
+<button id="stop" type="button" style="display:none;" onclick="activated()">Stop</button>
+<button id="continue" type="button" style="display:none;" onclick="unactivated()">Continue</button>
+<button id="reset" type="button" style="display:none;" onclick="reset()">Reset</button>
+
+<script>
+	var active = false;
+  var cancel = false;
+  function activated() {active = true;}
+  function unactivated(){
+    active = false;
+    document.getElementById("continue").style.display = 'none';
+    document.getElementById("stop").style.display = 'block';
+    countdown(hr,mi,se);
+  }
+  function reset(){
+    if(active==false) cancel = true;
+    else{
+      cancel = true; 
+      unactivated();
+    }
+  }
+    
+	function timer(){
+    hour = prompt("Please enter the hours.");
+    if (hour==null)return 0;
+    if (hour<0 || hour==''){
+      alert("Invalid input, please try again.");
+      return 0;
+    }
+    min = prompt("Please enter the minutes.");
+    if (min==null)return 0;
+    if (min<0 || min>59 || min==''){
+      alert("Invalid input, please try again.");
+      return 0;
+    }
+    sec = prompt("Please enter the seconds.");
+    if (sec==null)return 0;
+    if (sec<0 || sec>59 || sec==''){
+      alert("Invalid input, please try again.");
+      return 0;
+    }
+    var ok = confirm("Are you sure this is the right time?");
+    if (ok==true){
+      document.getElementById("sett").style.display = 'none';
+      document.getElementById("stop").style.display = 'block';
+      document.getElementById("reset").style.display = 'block';
+      countdown(hour,min,sec);
+    }
+  }
+  
+  function countdown(h,m,s){
+    if(h==0 && m==0 && s==0){
+      alert("YOUR TIME IS UP!!!");
+      document.getElementById("showtimer").innerHTML = 'No timer is set.';
+      document.getElementById("sett").style.display = 'block';
+      document.getElementById("reset").style.display = 'none';
+      document.getElementById("stop").style.display = 'none';
+      document.getElementById("continue").style.display = 'none';
+      return 0;
+    }
+    if (h<2){
+      if (m<2){
+        if (s<2) document.getElementById("showtimer").innerHTML = ["You have",h,"hour,",m,"minute and",s,"second left."].join(' ');
+        else document.getElementById("showtimer").innerHTML = ["You have",h,"hour,",m,"minute and",s,"seconds left."].join(' ');
+      }
+      else{
+        if (s<2)document.getElementById("showtimer").innerHTML = ["You have",h,"hour,",m,"minutes and",s,"second left."].join(' ');
+        else document.getElementById("showtimer").innerHTML = ["You have",h,"hour,",m,"minutes and",s,"seconds left."].join(' ');
+      }
+    }
+    else{
+      if (m<2){
+        if (s<2) document.getElementById("showtimer").innerHTML = ["You have",h,"hours,",m,"minute and",s,"second left."].join(' ');
+        else document.getElementById("showtimer").innerHTML = ["You have",h,"hours,",m,"minute and",s,"seconds left."].join(' ');
+      }
+      else{
+        if (s<2) document.getElementById("showtimer").innerHTML = ["You have",h,"hours,",m,"minutes and",s,"second left."].join(' ');
+        else document.getElementById("showtimer").innerHTML = ["You have",h,"hours,",m,"minutes and",s,"seconds left."].join(' ');
+      }
+    }
+    if (s==0 && m==0 && h!=0){
+      s=59;
+      m=59;
+      h-=1;
+    }
+    else if (s==0 && m!=0){
+      s=59;
+      m-=1;
+    }
+    else s-=1;
+    if (active==true){
+      document.getElementById("stop").style.display = 'none';
+      document.getElementById("continue").style.display = 'block';
+      stop(h,m,s+1);
+      return 0;
+    }
+    if (cancel==true){
+      cancel = false;
+      document.getElementById("showtimer").innerHTML = 'No timer is set.';
+      document.getElementById("sett").style.display = 'block';
+      document.getElementById("reset").style.display = 'none';
+      document.getElementById("stop").style.display = 'none';
+      document.getElementById("continue").style.display = 'none';
+      return 0;
+    }
+    else setTimeout(countdown,1000,h,m,s);
+  }
+    
+  function stop(h,m,s){
+    document.getElementById("showtimer").innerHTML = "Paused.";
+    window.hr = h;
+    window.mi = m;
+    window.se = s;
+  }  
+</script>
+<p></p>
+
+</body>
+<html>

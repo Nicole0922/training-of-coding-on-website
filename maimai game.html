@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+  #spdctrl{
+    top: 310px;
+    left: 230px;
+    cursor: grab;
+    position: absolute;
+    transform-origin: center;
+  }
+  .block {
+    width: 240px;
+    height: 100px;
+    background: #799ce0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #fff;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 30px;
+  }
+  button{
+    top: 35px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    background: #000;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    z-index: 1;
+    cursor: grab;
+  }
+  
+  #container{
+  	position: absolute;
+    background: #a6edeb;
+    border: 10px double #7b74db;
+    width: 710px;
+    height: 700px;
+    left: 340px;
+  	top: 0px;
+    display: inline-block;
+  }
+  .container1{
+  	position: absolute;
+    background: #ffb3c7;
+    border: 10px double #db7484;
+    width: 320px;
+    height: 700px;
+    left: 1070px;
+  	top: 0px;
+    display: inline-block;
+    text-align: center;
+  }
+  .circle {
+    position: relative;
+    background: #000000;
+    width: 600px;
+    height: 600px;
+    left: 50px;
+  	top: 50px;
+    border-radius: 50%;
+    border: 4px solid white;
+    font-size: 90px;
+    color: #4f4f4f;
+    line-height: 580px;
+    text-align: center;
+    cursor: grab;
+  }
+  .circle .tick {
+  	position: absolute;
+    height: 20px;
+    width: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: inline-block;
+	left: 290px;
+  	top: 290px;
+    z-index: 2;
+  }
+  .circle .det {
+  	position: absolute;
+    height: 120px;
+    width: 120px;
+    background: #fff;
+    border-radius: 50%;
+    display: inline-block;
+	left: 240px;
+  	top: 240px;
+    transition: all 0.01s;
+    opacity:0.3;
+    z-index: 2;
+  }
+  .box {
+    display: inline-block;
+    border-radius: 50%;
+    color: #facaca;
+    border: 8px solid #ff57ae;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+	left: 326px;
+  	top: 326px;
+    transition: all 0.1s;
+    display: none;
+    transform-origin: center;
+  }
+  #click{
+    background: transparent;
+    border-radius: 50%;
+	position: absolute;
+    height: 600px;
+    width: 600px;
+    top: 54px;
+    left: 54px;
+    font-size: 40px;
+    color: #fff;
+    line-height: 720px;
+    text-align: center;
+    z-index: 3;
+    cursor: grab;
+  }
+  #combo{
+    background: transparent;
+	position: absolute;
+    height: 600px;
+    width: 600px;
+    top: 54px;
+    left: 54px;
+    font-size: 40px;
+    color: #fff;
+    line-height: 720px;
+    text-align: center;
+    cursor: grab;
+    display: none;
+  }
+  .perfect {
+	position: absolute;
+   	padding-left: 185px;
+    top: 332px;
+    left: 353px;
+    font-size: 35px;
+    color: #ffc02e;
+    transform-origin: left center;
+    display: none;
+    text-shadow: 0px 0px 10px #ffd773;
+    //border: 2px solid white;
+  }
+  .great {
+	position: absolute;
+    padding-left: 205px;
+    top: 332px;
+    left: 353px;
+    font-size: 35px;
+    color: #ff66a6;
+    transform-origin: left center;
+    display: none;
+    text-shadow: 0px 0px 10px #ff99d6;
+    //border: 2px solid white;
+  }
+  .good {
+	position: absolute;
+    padding-left: 205px;
+    top: 332px;
+    left: 353px;
+    font-size: 35px;
+    color: #14b850;
+    transform-origin: left center;
+    display: none;
+    text-shadow: 0px 0px 10px #40cf6d;
+    //border: 2px solid white;
+  }
+  .miss {
+	position: absolute;
+    padding-left: 215px;
+    top: 332px;
+    left: 353px;
+    font-size: 35px;
+    color: #9c9c9c;
+    transform-origin: left center;
+    display: none;
+    text-shadow: 0px 0px 10px white;
+    //border: 2px solid white;
+  }
+
+  img {
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 10px 50px 10px;
+    border-color: #23cc3f;
+    border-radius: 5px;
+    top: 230px;
+    left: 255px;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    transform-origin: center;
+    display:none;
+    cursor: grab;
+  }
+  #title{
+  	position: absolute;
+    top: 455px;
+    left: 255px;
+    width: 200px;
+    height: 30px;
+    font-size: 22px;
+    text-align: center;
+    cursor: grab;
+    display: none;
+    color: #fff;
+    background: #0c2b78;
+  }
+  #author{
+  	position: absolute;
+    top: 485px;
+    left: 255px;
+    width: 200px;
+    height: 20px;
+    font-size: 15px;
+    text-align: center;
+    cursor: grab;
+    display: none;
+    color: #fff;
+    background: #152447;
+  }
+  #level{
+	position: absolute;
+    //border: 1px solid #fff;
+    top: 420px;
+    left: 268px;
+    width: 170px;
+    font-size: 27px;
+    text-align: left;
+    cursor: grab;
+    display: none;
+    color: #fff;
+  }
+  
+  #trans{
+    position: absolute;
+    left: 0px;
+  	top: 0px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    border: 0px solid #b0c8ff;
+    //background: transparent;
+    z-index: 1;
+  }
+  @keyframes change{
+    25%  {border: 300px solid #b0c8ff; width: 1px; height: 1px;}
+    75%  {border: 300px solid #b0c8ff; width: 1px; height: 1px;}
+    100% {width: 600px; height: 600px; border: 0px solid #b0c8ff;}
+  }
+  .circle .tick:nth-child(1) {transform: rotate(22.5deg) translate(302px);}
+  .circle .tick:nth-child(2) {transform: rotate(67.5deg) translate(302px);}
+  .circle .tick:nth-child(3) {transform: rotate(112.5deg) translate(302px);}
+  .circle .tick:nth-child(4) {transform: rotate(157.5deg) translate(302px);}
+  .circle .tick:nth-child(5) {transform: rotate(202.5deg) translate(302px);}
+  .circle .tick:nth-child(6) {transform: rotate(247.5deg) translate(302px);}
+  .circle .tick:nth-child(7) {transform: rotate(292.5deg) translate(302px);}
+  .circle .tick:nth-child(8) {transform: rotate(337.5deg) translate(302px);}
+  .circle .det:nth-child(9) {transform: rotate(22.5deg) translate(300px);}
+  .circle .det:nth-child(10) {transform: rotate(67.5deg) translate(300px);}
+  .circle .det:nth-child(11) {transform: rotate(112.5deg) translate(300px);}
+  .circle .det:nth-child(12) {transform: rotate(157.5deg) translate(300px);}
+  .circle .det:nth-child(13) {transform: rotate(202.5deg) translate(300px);}
+  .circle .det:nth-child(14) {transform: rotate(247.5deg) translate(300px);}
+  .circle .det:nth-child(15) {transform: rotate(292.5deg) translate(300px);}
+  .circle .det:nth-child(16) {transform: rotate(337.5deg) translate(300px);}
+</style>
+
+<div class="container1" style="left: 0px; top: 0px;"></div>
+
+<div id="container">
+  <div class="circle">MaiMai
+    <div class="tick"></div><div class="tick"></div>
+    <div class="tick"></div><div class="tick"></div>
+    <div class="tick"></div><div class="tick"></div>
+    <div class="tick"></div><div class="tick"></div>
+    <div class="det"></div><div class="det"></div>
+    <div class="det"></div><div class="det"></div>  
+    <div class="det"></div><div class="det"></div>  
+    <div class="det"></div><div class="det"></div>
+    <div id="trans"></div>
+  </div>
+  
+  <img class="song" src="https://i.scdn.co/image/ab67616d0000b2734465e20d27519e1b9dacf366">
+  <img class="song" src="https://i.kfs.io/album/global/84440333,0v1/fit/500x500.jpg">
+  <img class="song" src="https://c-fa.cdn.smule.com/rs-s80/arr/38/44/ecd17050-d989-445d-9274-96b394eef04d_1024.jpg">
+  <img class="song" src="https://static.miraheze.org/projectsekaiwiki/c/c5/Jacket143.png">
+  
+  <div id="title"></div>
+  <div id="author"></div>
+  <div id="level"></div>
+  <div id="spdctrl" style="display: none">
+    <button type="button" onclick="slower()">-</button>
+    <div id=speed class="block"></div>
+    <button type="button" style="left: 195px" onclick="faster()">+</button>
+  </div>
+  
+  <div id="click" type="button" onclick="start()">Tap to start</div>
+  <div id="combo"></div>
+  <span class="perfect" style="transform:rotate(22deg)">Perfect</span>
+  <span class="perfect" style="transform:rotate(67deg)">Perfect</span>
+  <span class="perfect" style="transform:rotate(112deg)">Perfect</span>
+  <span class="perfect" style="transform:rotate(157deg)">Perfect</span>
+  <span class="perfect" style="transform:rotate(-157deg)">Perfect</span>
+  <span class="perfect" style="transform:rotate(-112deg)">Perfect</span>
+  <span class="perfect" style="transform:rotate(-67deg)">Perfect</span>
+  <span class="perfect" style="transform:rotate(-22deg)">Perfect</span>
+
+  <span class="great" style="transform:rotate(22deg)">Great</span>
+  <span class="great" style="transform:rotate(67deg)">Great</span>
+  <span class="great" style="transform:rotate(112deg)">Great</span>
+  <span class="great" style="transform:rotate(157deg)">Great</span>
+  <span class="great" style="transform:rotate(-157deg)">Great</span>
+  <span class="great" style="transform:rotate(-112deg)">Great</span>
+  <span class="great" style="transform:rotate(-67deg)">Great</span>
+  <span class="great" style="transform:rotate(-22deg)">Great</span>
+
+  <span class="good" style="transform:rotate(22deg)">Good</span>
+  <span class="good" style="transform:rotate(67deg)">Good</span>
+  <span class="good" style="transform:rotate(112deg)">Good</span>
+  <span class="good" style="transform:rotate(157deg)">Good</span>
+  <span class="good" style="transform:rotate(-157deg)">Good</span>
+  <span class="good" style="transform:rotate(-112deg)">Good</span>
+  <span class="good" style="transform:rotate(-67deg)">Good</span>
+  <span class="good" style="transform:rotate(-22deg)">Good</span>
+
+  <span class="miss" style="transform:rotate(22deg)">Miss</span>
+  <span class="miss" style="transform:rotate(67deg)">Miss</span>
+  <span class="miss" style="transform:rotate(112deg)">Miss</span>
+  <span class="miss" style="transform:rotate(157deg)">Miss</span>
+  <span class="miss" style="transform:rotate(-157deg)">Miss</span>
+  <span class="miss" style="transform:rotate(-112deg)">Miss</span>
+  <span class="miss" style="transform:rotate(-67deg)">Miss</span>
+  <span class="miss" style="transform:rotate(-22deg)">Miss</span>
+
+  <div class="box"></div><div class="box"></div>
+  <div class="box"></div><div class="box"></div>
+  <div class="box"></div><div class="box"></div>
+  <div class="box"></div><div class="box"></div>
+  <div class="box"></div><div class="box"></div>
+  <div class="box"></div><div class="box"></div>
+  <div class="box"></div><div class="box"></div>
+  <div class="box"></div><div class="box"></div>
+</div>
+
+<div class="container1"></div>
+
+<script> 
+  //menu blinking
+  var blink = document.getElementById('click');
+  var bright=100;
+  var dim=false; //false = down
+  setInterval(function() {
+  	if(dim==false){
+      blink.style.opacity = bright/100;
+      bright--;
+      if(bright==0) dim=true;
+  	}
+    else if(dim=true){
+      blink.style.opacity = bright/100;
+      bright++;
+      if(bright==100) dim=false;
+  	}
+  }, 15); 
+
+  //speed control
+  var spd=5;
+  var moving=false;
+  var box = document.getElementsByClassName("box");  
+  document.getElementById("speed").innerHTML=['Speed:',spd].join(' '); 
+  function faster(){
+  	if(spd<10) spd+=1;
+    document.getElementById("speed").innerHTML=['Speed:',spd].join(' ');
+  }
+  function slower(){
+  	if(spd>1) spd-=1;
+    document.getElementById("speed").innerHTML=['Speed:',spd].join(' ');
+  }
+  
+  //start
+  function start(){
+    blink.style.display='none';
+    document.getElementById("trans").style.animation="change 4s";
+    setTimeout(selectsg,3000);
+    setTimeout(function(){document.getElementById("trans").style.animation="none";},4000);
+  }
+  
+  //select song
+  var lvl='Easy';
+  var sglist = ['KING','ラグトレイン','ロキ','Traffic Jam'];
+  var author = ['Kanaria','稲葉曇','みきとP','煮ル果実'];
+  var numSong = sglist.length;
+  var song = document.getElementsByClassName("song");
+  var sgTitle = document.getElementById("title");
+  var sgAuthor = document.getElementById("author");
+  var curno = 0;
+  
+ function selectsg(){
+    document.getElementById("level").innerHTML=lvl;
+    document.getElementById("level").style.display="block";
+    if (curno!=0){
+      song[curno-1].style.display="block";
+      song[curno-1].style.transform='translate(-180px,20px) scale(0.7,0.7)';
+    }
+    song[curno].style.display="block";
+    song[curno].style.borderWidth="10px 10px 100px 10px";
+    if (curno!=numSong-1){
+      song[curno+1].style.display="block";
+      song[curno+1].style.transform='translate(180px,20px) scale(0.7,0.7)';
+    }
+    sgTitle.innerHTML=sglist[curno];
+    sgAuthor.innerHTML=author[curno];
+    sgTitle.style.display="block";
+    sgAuthor.style.display="block";
+    
+    document.getElementsByClassName("det")[0].onclick = function(){
+      if (curno<numSong-1){
+        curno++;
+        swap(curno);
+      }
+    };
+    document.getElementsByClassName("det")[1].onclick = function(){setting();};
+    
+    document.getElementsByClassName("det")[2].onclick = function(){
+      document.getElementById("trans").style.animation="change 4s";
+      setTimeout(function(){
+        document.getElementById("level").style.display="none";
+        for (var i=0; i<numSong; i++) song[i].style.display="none";
+        sgTitle.style.display="none";
+        sgAuthor.style.display="none";
+        for (var i=0; i<8; i++) document.getElementsByClassName("det")[i].onclick='none';
+      },1000);
+      setTimeout(function(){blink.style.display='block';},3300);
+      setTimeout(function(){document.getElementById("trans").style.animation="none";},4000);
+    };
+    
+    document.getElementsByClassName("det")[3].onclick = function(){
+      if (curno>0){
+        curno--;
+        swap(curno);
+      }
+    };
+    
+    document.getElementsByClassName("det")[5].onclick = function(){
+      if(lvl=='Advanced'){
+        lvl='Easy';
+        for(var i=0; i<numSong; i++) song[i].style.borderColor="#23cc3f";
+      }
+      else if(lvl=='Expert'){
+        lvl='Advanced';
+        for(var i=0; i<numSong; i++) song[i].style.borderColor="#ffc526";
+      }
+      else if(lvl=='Master'){
+        lvl='Expert';
+        for(var i=0; i<numSong; i++) song[i].style.borderColor="#eb0c38";
+      }
+      document.getElementById("level").innerHTML=lvl;
+    };
+    
+    document.getElementsByClassName("det")[6].onclick = function(){
+      if(lvl=='Easy'){
+        lvl='Advanced';
+        for(var i=0; i<numSong; i++) song[i].style.borderColor="#ffc526";
+      }
+      else if(lvl=='Advanced'){
+        lvl='Expert';
+        for(var i=0; i<numSong; i++) song[i].style.borderColor="#eb0c38";
+      }
+      else if(lvl=='Expert'){
+        lvl='Master';
+        for(var i=0; i<numSong; i++) song[i].style.borderColor="#a416ba";
+      }
+      document.getElementById("level").innerHTML=lvl;
+    };
+  } 
+  function swap(curno){
+    if (curno>0){
+      song[curno-1].style.display="block";
+      song[curno-1].style.transform='translate(-180px,20px) scale(0.7,0.7)';
+      song[curno-1].style.borderWidth="10px 10px 50px 10px";
+    }
+    song[curno].style.transform='scale(1,1)';
+    song[curno].style.borderWidth="10px 10px 100px 10px";
+    if (curno<numSong-1){
+      song[curno+1].style.display="block";
+      song[curno+1].style.transform='translate(180px,20px) scale(0.7,0.7)';
+      song[curno+1].style.borderWidth="10px 10px 50px 10px";
+    }
+    if (curno-2>=0) song[curno-2].style.display="none";
+    if (curno+2<numSong) song[curno+2].style.display="none";
+    
+    sgTitle.innerHTML=sglist[curno];
+    sgAuthor.innerHTML=author[curno];
+  }
+  
+  function setting(){
+    var curpos=0;
+    for (var i=0; i<numSong; i++) song[i].style.display="none";
+    var setlist = [song[curno],document.getElementById("spdctrl")]
+    setlist[0].style.display="block";
+    setlist[1].style.display="block";
+    setlist[1].style.transform='translateX(200px) scale(0.7,0.7)';
+  
+    document.getElementsByClassName("det")[0].onclick = function(){
+      if(curpos<setlist.length-1){
+        curpos++;
+        swapset();
+      }
+    };
+    document.getElementsByClassName("det")[1].onclick = function(){
+      document.getElementById("trans").style.animation="change 4s";
+      setTimeout(function(){
+        document.getElementById("level").style.display="none";
+        sgTitle.style.display="none";
+        sgAuthor.style.display="none";
+        setlist[0].style.display="none";
+        setlist[1].style.display="none";
+        for (var i=0; i<8; i++) document.getElementsByClassName("det")[i].onclick='none';
+        document.getElementById("combo").style.display='block';
+      },1000);
+      setTimeout(function(){document.getElementById("trans").style.animation="none";},4000);
+      setTimeout(king,7000);
+    };
+    document.getElementsByClassName("det")[2].onclick = function(){
+      setlist[0].style.transform='scale(1,1)';
+      setlist[1].style.display="none";
+      selectsg();
+    };
+    document.getElementsByClassName("det")[3].onclick = function(){
+      if(curpos>0){
+        curpos--;
+        swapset();
+      }
+    };
+    
+    function swapset(){
+      if (curpos>0){
+        setlist[curpos-1].style.display="block";
+        setlist[curpos-1].style.transform='translateX(-200px) scale(0.7,0.7)';
+      }
+      setlist[curpos].style.transform='scale(1,1)';
+      if (curpos<setlist.length-1){
+        setlist[curpos+1].style.display="block";
+        setlist[curpos+1].style.transform='translateX(200px) scale(0.7,0.7)';
+      }
+      if (curpos-2>=0) setlist[curpos-2].style.display="none";
+      if (curpos+2<setlist.length) setlist[curpos+2].style.display="none";
+    }
+  }
+  
+  let left1=0.41;
+  let left2=2.42;
+  let right1=-2.42;
+  let right2=-0.41;
+  let up=-1;
+  let down=1;
+  let limit=2.4;
+  var list = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+  
+  //button fall down
+  var showP = document.getElementsByClassName("perfect");
+  var showGr = document.getElementsByClassName("great");
+  var showGo = document.getElementsByClassName("good");
+  var showM = document.getElementsByClassName("miss");
+  
+  function beat(boxnum,tantop,tanleft,i,limit=1,down2=0,count=0) {
+  	box[boxnum].style.display='block';    
+    moving=true;
+    var velocity=spd/limit;
+    box[boxnum].style.bottom = velocity + "px";
+    box[boxnum].style.top = 326 + velocity/tantop * down2 + "px";
+    box[boxnum].style.left = 326 - velocity/tanleft * down2 + "px";
+    count += spd;
+    down2++;
+    
+    document.getElementsByClassName("det")[i].onclick = function(){check(i,count,boxnum)};
+    if(list[boxnum]==false && count>350){
+      showM[i].style.display = "block";
+      combo1=0;
+      document.getElementById("combo").innerHTML=[combo1,"Combo"].join(' ');
+    }
+    if(count > 350 || list[boxnum]==true){
+      setTimeout(function(){for(var j=100; j>=0; j--) box[boxnum].style.opacity=j/100;},1);
+      setTimeout(function(){
+      	showM[i].style.display = "none";
+        showP[i].style.display = "none";
+        showGr[i].style.display = "none";
+        showGo[i].style.display = "none";},400);
+      count=0;
+      moving=false;
+      setTimeout(reload,100,boxnum);
+      return 0;
+    }
+    else setTimeout(beat,20,boxnum,tantop,tanleft,i,limit,down2,count);
+  }
+  
+  //detect the range
+  var combo1=0;
+  document.getElementById("combo").innerHTML=[combo1,"Combo"].join(' ');
+  function check(i,count,boxnum){
+    if(list[boxnum]==false && count>210){
+      list[boxnum]=true;
+      if(count>260 && count<=310){
+        showP[i].style.display = "block";
+      }
+      else if(count<=260 && count>230 || count<=330 && count>310){
+        showGr[i].style.display = "block";
+      }
+      else if(count<=350 && count>330 || count>210 && count<=230){
+        showGo[i].style.display = "block";
+      }
+      combo1++;
+      document.getElementById("combo").innerHTML=[combo1,"Combo"].join(' ');
+    }
+  }
+  
+  //reset
+  function reload(boxnum){
+    box[boxnum].style.top = 326 + "px";
+    box[boxnum].style.bottom = 0 + "px";
+    box[boxnum].style.left = 326 + "px";
+    box[boxnum].style.opacity = 1;
+    list[boxnum]=false;
+    box[boxnum].style.display='none';
+    return 0;
+  }  
+  function reset(){
+    if (moving==false){
+      for (var boxnum=0; boxnum<16; boxnum++) reload(boxnum);
+      for (var i=0; i<8; i++) document.getElementsByClassName("det")[i].onclick='none';
+      combo1=0;
+      document.getElementById("combo").innerHTML=[combo1,"Combo"].join(' ');
+      blink.style.display='block';
+      document.getElementById("combo").style.display='none';
+    }
+  }
+  
+  //SONG LIST
+  function king(){
+    setTimeout(beat,100,0,down,left2,2);
+    setTimeout(beat,600,1,down,right1,1);
+    setTimeout(beat,1100,2,down,left1,3,limit);
+    setTimeout(beat,1600,3,down,right1,1);
+    setTimeout(beat,2100,4,down,left2,2);
+    setTimeout(beat,2600,5,down,right2,0,limit);
+    setTimeout(reset,6000);
+  }
+</script>
+</body>
+</html>
